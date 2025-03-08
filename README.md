@@ -29,7 +29,7 @@ You're able to use an alternative ways to keep it by providing `categories` and 
 ## Example
 
 ### With `ConfusableHomoglyphs.init()`
-```
+```elixir
 ConfusableHomoglyphs.init()
 
 alias ConfusableHomoglyphs.Confusables
@@ -43,7 +43,7 @@ Confusables.confusable?("microsоft", false, ["latin", "common"]) #[<not empty>]
 ### With providing categories and confusables
 
 if provided data is the same results would be the similar
-```
+```elixir
 alias ConfusableHomoglyphs.Confusables
 
 Confusables.dangerous?("AlaskaJazz", [], %{categories: categories, confusables: confusables}) # false
