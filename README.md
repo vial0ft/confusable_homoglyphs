@@ -60,7 +60,7 @@ by adding `confusable_homoglyphs` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    #{:confusable_homoglyphs, git: "https://github.com/vial0ft/confusable_homoglyphs"}
+    {:confusable_homoglyphs, git: "https://github.com/vial0ft/confusable_homoglyphs"}
   ]
 end
 ```
