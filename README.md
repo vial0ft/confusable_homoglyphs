@@ -24,7 +24,7 @@ By default it uses `:persistent_term` for caching data about confusable homoglyp
 For initialization `:persistent_term` storage you could execute `ConfusableHomoglyphs.init/0` function.
 
 ## But!
-You're able to use an alternative ways to keep it by providing `categories` and `confusables` datas as 3th argument to functions.
+You're able to use an alternative ways to keep it by providing `categories` and `confusables` datas as the last argument of functions.
 
 ## Example
 
