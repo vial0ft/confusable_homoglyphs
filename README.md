@@ -2,7 +2,7 @@
 
 > This is elixir version of golang [lib](https://github.com/SkygearIO/go-confusable-homoglyphs/) which is version of python [lib](https://github.com/vhf/confusable_homoglyphs)
 
-a homoglyph is one of two or more graphemes, characters, or glyphs with shapes that appear identical or very similar (wikipedia:Homoglyph)[https://en.wikipedia.org/wiki/Homoglyph]
+a homoglyph is one of two or more graphemes, characters, or glyphs with shapes that appear identical or very similar [wikipedia:Homoglyph](https://en.wikipedia.org/wiki/Homoglyph)
 
 Unicode homoglyphs can be a nuisance on the web. Your most popular client, AlaskaJazz, might be upset to be impersonated by a trickster who deliberately chose the username ΑlaskaJazz.
 
