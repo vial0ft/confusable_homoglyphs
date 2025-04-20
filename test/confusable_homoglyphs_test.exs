@@ -5,18 +5,18 @@ defmodule ConfusableHomoglyphsTest do
   alias ConfusableHomoglyphs.Confusables
 
   setup_all do
-  	ConfusableHomoglyphs.init()
+    ConfusableHomoglyphs.init()
   end
 
   describe "Confusables" do
     test "mixed_script?" do
-      for {str, aliases, mixed? } <- [
+      for {str, aliases, mixed?} <- [
             {"Abç", nil, false},
-		        {"ρτ.τil", false},
-		        {"ρτ.τ", [], true},
-		        {"Alloτ", nil, true},
+            {"ρτ.τil", false},
+            {"ρτ.τ", [], true},
+            {"Alloτ", nil, true}
           ] do
-          assert Confusables.mixed_script?(str, aliases, Categories.get_categories()) == mixed?
+        assert Confusables.mixed_script?(str, aliases, Categories.get_categories()) == mixed?
       end
     end
 

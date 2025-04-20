@@ -1,9 +1,8 @@
 defmodule ConfusableHomoglyphs.Categories do
-
+  @moduledoc false
   def get_categories do
     :persistent_term.get(ConfusableHomoglyphs.Categories, %{})
   end
-
 
   @spec aliases_categories(char()) :: {map(), map()}
   def aliases_categories(char) do
@@ -11,9 +10,9 @@ defmodule ConfusableHomoglyphs.Categories do
   end
 
   @spec aliases_categories(char(), map()) :: {map(), map()}
-  def aliases_categories(char, cats) do
+  def aliases_categories(char, %{"code_points_ranges" => cpr} = cats) do
     l = 0
-    r = length(Map.get(cats, "code_points_ranges")) - 1
+    r = length(cpr) - 1
     aliases_categories_rec(l, r, char, cats)
   end
 
@@ -24,9 +23,13 @@ defmodule ConfusableHomoglyphs.Categories do
     m_range = Enum.at(points_ranges, m, [])
 
     cond do
-    	char < Enum.at(m_range, 0) -> aliases_categories_rec(l, m - 1, char, cats)
-      char > Enum.at(m_range, 1) -> aliases_categories_rec(m + 1, r, char, cats)
-    	true ->
+      char < Enum.at(m_range, 0) ->
+        aliases_categories_rec(l, m - 1, char, cats)
+
+      char > Enum.at(m_range, 1) ->
+        aliases_categories_rec(m + 1, r, char, cats)
+
+      true ->
         code_2 = Enum.at(m_range, 2, [])
         code_3 = Enum.at(m_range, 3, [])
 
@@ -37,8 +40,7 @@ defmodule ConfusableHomoglyphs.Categories do
     end
   end
 
-  defp aliases_categories_rec(_, _,_, _), do: {"Unknown", "Zzzz"}
-
+  defp aliases_categories_rec(_, _, _, _), do: {"Unknown", "Zzzz"}
 
   @spec unique_aliases(String.t()) :: MapSet.t()
   def unique_aliases(string) do
@@ -48,7 +50,7 @@ defmodule ConfusableHomoglyphs.Categories do
   @spec unique_aliases(any(), map()) :: MapSet.t()
   def unique_aliases(string, cats) do
     to_charlist(string)
-    |> Enum.map(& aliaz(&1, cats))
+    |> Enum.map(&aliaz(&1, cats))
     |> MapSet.new()
   end
 
@@ -65,13 +67,13 @@ defmodule ConfusableHomoglyphs.Categories do
   end
 
   @spec category(char()) :: map()
-  def category(char)  do
-  	category(char, get_categories())
+  def category(char) do
+    category(char, get_categories())
   end
 
   @spec category(char(), map()) :: map()
-  def category(char, cats)  do
-  	char
+  def category(char, cats) do
+    char
     |> aliases_categories(cats)
     |> elem(1)
   end

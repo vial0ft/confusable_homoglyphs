@@ -1,8 +1,9 @@
 defmodule ConfusableHomoglyphs.Confusables do
+  @moduledoc false
   alias ConfusableHomoglyphs.Categories
 
   defp get_confusables() do
-    :persistent_term.get(ConfusableHomoglyphs.Confusables)
+    :persistent_term.get(ConfusableHomoglyphs.Confusables, %{})
   end
 
   @doc """
@@ -17,7 +18,8 @@ defmodule ConfusableHomoglyphs.Confusables do
     mixed_script?(string, allowed_aliases, Categories.get_categories())
   end
 
-  def mixed_script?(string, nil, _), do: mixed_script?(string, ["COMMON"])
+  @spec mixed_script?(String.t(), list(String.t()) | nil, map()) :: boolean()
+  def mixed_script?(string, nil, cats), do: mixed_script?(string, ["COMMON"], cats)
 
   def mixed_script?(string, allowed_aliases, cats) do
     allowed_aliases_set = aliases_set(allowed_aliases)
@@ -58,7 +60,7 @@ defmodule ConfusableHomoglyphs.Confusables do
       case {MapSet.member?(preferred_aliases_set, char_alias),
             Map.get(confusables, char_to_string(char), nil)} do
         {false, found} when not is_nil(found) ->
-          potentiallyConfusable =
+          potentially_confusable =
             potentially_confusables_rec(
               preferred_aliases_set |> MapSet.to_list(),
               found,
@@ -66,11 +68,11 @@ defmodule ConfusableHomoglyphs.Confusables do
               %{break: false, result: []}
             )
 
-          if length(potentiallyConfusable) > 0 do
+          if length(potentially_confusable) > 0 do
             new_confusable = %{
               char: char_to_string(char),
               aliaz: char_alias,
-              homoglyphs: potentiallyConfusable
+              homoglyphs: potentially_confusable
             }
 
             new_acc = [new_confusable | acc]
@@ -132,9 +134,15 @@ defmodule ConfusableHomoglyphs.Confusables do
     })
   end
 
-  def dangerous?(string, preferred_aliases, %{categories: cats, confusables: confusables}) do
-    result = find_confusables(string, false, preferred_aliases, confusables)
-    mixed_script?(string, nil, cats) and length(result) > 0
+  @spec dangerous?(String.t(), list(String.t()), %{categories: map(), confusables: map()}) ::
+          boolean()
+  def dangerous?(
+        str,
+        preferred_aliases,
+        %{categories: cats, confusables: _confusables} = cat_conf
+      ) do
+    result = find_confusables(str, false, preferred_aliases, cat_conf)
+    mixed_script?(str, nil, cats) and length(result) > 0
   end
 
   defp char_to_string(ch), do: "#{[ch]}"
