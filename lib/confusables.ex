@@ -37,12 +37,12 @@ defmodule ConfusableHomoglyphs.Confusables do
   be considered as your 'base' unicode blocks
   """
 
-  @spec find_confusable(String.t(), boolean(), list(String.t())) :: list(map())
+  @spec find_confusables(String.t(), boolean(), list(String.t())) :: list(map())
   def find_confusables(string, greedy?, preferred_aliases) do
-    find_confusable(string, greedy?, preferred_aliases, get_confusables())
+    find_confusables(string, greedy?, preferred_aliases, get_confusables())
   end
 
-  @spec find_confusable(String.t(), boolean(), list(String.t()), map()) :: list(map())
+  @spec find_confusables(String.t(), boolean(), list(String.t()), map()) :: list(map())
   def find_confusables(string, greedy?, preferred_aliases, %{
         categories: cats,
         confusables: confusables
