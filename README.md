@@ -9,7 +9,7 @@ Unicode homoglyphs can be a nuisance on the web. Your most popular client, Alask
     AlaskaJazz is single script: only Latin characters.
     ΑlaskaJazz is mixed-script: the first character is a greek letter.
 
-You might also want to avoid people being tricked into entering their password on www.micros﻿оft.com or www.faϲebook.com instead of www.microsoft.com or www.facebook.com. Here is a utility to play with these confusable homoglyphs.
+You might also want to avoid people being tricked into entering their password on `www.micros﻿оft.com` or `www.faϲebook.com` instead of `www.microsoft.com` or `www.facebook.com`. Here is a utility to play with these confusable homoglyphs.
 
 Not all mixed-script strings have to be ruled out though, you could only exclude mixed-script strings containing characters that might be confused with a character from some unicode blocks of your choosing.
 
