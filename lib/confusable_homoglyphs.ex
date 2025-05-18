@@ -18,7 +18,7 @@ defmodule ConfusableHomoglyphs do
       path
       |> Path.join("confusables.json")
       |> File.read!()
-      |> JSON.decode!()
+      |> Jason.decode!()
 
     :persistent_term.put(ConfusableHomoglyphs.Confusables, confusable_homoglyphs)
   end
@@ -28,7 +28,7 @@ defmodule ConfusableHomoglyphs do
       path
       |> Path.join("categories.json")
       |> File.read!()
-      |> JSON.decode!()
+      |> Jason.decode!()
 
     :persistent_term.put(ConfusableHomoglyphs.Categories, categories)
   end
